@@ -35,7 +35,7 @@ div:before{
     );
     left: -25%;
     top: -25%;
-    animation: spin 3.5s infinite linear;
+    animation: spin 1.5s infinite linear;
 }
 @keyframes spin{
     100%{
