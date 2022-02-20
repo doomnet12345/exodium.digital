@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exodium Verify</title>
+    <script src="https://hcaptcha.com/1/api.js" async defer></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        async function Verify() {
+            const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });
+            let value = params.id;
+            $.post("https://exodium-bo.herokuapp.com/", { id: i }, function (data) {
+                if (data === 'yes') {
+                    window.open("https://exodium.digital/")
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <form id="VerifyForm" onsubmit="Verify(); return false;">
+        <div class="h-captcha" data-sitekey="21f777f4-c89e-4c1f-8040-68ba6b545297"></div>
+        <button type="submit">Verify</button>
+    </form>
+</body>
+
+</html>
