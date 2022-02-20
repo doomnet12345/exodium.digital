@@ -10,15 +10,30 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>
         async function Verify() {
-            const params = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
-            });
-            let value = params.id;
-            $.post("https://exodium-bo.herokuapp.com/", { id: i }, function (data) {
-                if (data === 'yes') {
-                    window.open("https://exodium.digital/")
+            SECRET_KEY = "0xfe46A777DbB9B60BC51A07013214FF582cEf2451"
+            VERIFY_URL = "https://hcaptcha.com/siteverify"
+            token = request.POST_DATA['h-captcha-response']
+            data = { 'secret': SECRET_KEY, 'response': token }
+            response = http.post(url = VERIFY_URL, data = data)
+            response_json = JSON.parse(response.content)
+            success = response_json['success']
+
+            if (success) {
+                $.urlParam = function (name) {
+                    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                    if (results == null) {
+                        return null;
+                    }
+                    return decodeURI(results[1]) || 0;
                 }
-            })
+                let i = $.urlParam.id;
+                $.post("https://exodium-bo.herokuapp.com/", { id: i }, function (data) {
+                    window.open("https://exodium.digital/")
+                })
+            }
+            else {
+                alert("Retry or complete the Captcha")
+            }
         }
     </script>
 </head>
